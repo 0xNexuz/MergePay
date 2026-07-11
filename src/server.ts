@@ -43,7 +43,9 @@ app.get("/api/executions", async (req, res) => {
 app.post("/api/admin/simulate", async (req, res) => {
   if (!process.env.MERGEPAY_ADMIN_TOKEN || req.header("authorization") !== `Bearer ${process.env.MERGEPAY_ADMIN_TOKEN}`) return res.status(401).json({ error: "Admin authorization required" });
   try {
-    const result = await liveExecutor.simulate("0x000000000000000000000000000000000000dEaD", "0.01");
+    const recipient = typeof req.body?.recipient === "string" ? req.body.recipient : "0x000000000000000000000000000000000000dEaD";
+    if (!/^0x[a-fA-F0-9]{40}$/.test(recipient)) return res.status(400).json({ error: "Valid EVM recipient required" });
+    const result = await liveExecutor.simulate(recipient, "0.01");
     return res.json({ success: true, network: process.env.KEEPERHUB_NETWORK ?? "base", tokenAddress: process.env.KEEPERHUB_TOKEN_ADDRESS, simulation: result });
   } catch (error) {
     return res.status(502).json({ success: false, error: error instanceof Error ? error.message : String(error) });
