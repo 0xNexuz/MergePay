@@ -70,6 +70,16 @@ This is real USDC. Do not enable live mode unless the KeeperHub organization wal
 
 KeeperHub also recognizes Base Sepolia (`base-sepolia`, chain ID `84532`). Testnet use requires a verified Base Sepolia ERC-20 address and test tokens; the Base mainnet USDC address above must not be treated as a testnet token.
 
+## Go-live checklist
+
+1. Fund the KeeperHub organization wallet with enough Base USDC for the chosen bounty.
+2. Fund the same wallet with a small amount of Base ETH if the organization does not have applicable gas sponsorship.
+3. Run the admin-only `/api/admin/simulate` check. It must return `wouldRevert: false`.
+4. Configure KeeperHub spending caps below the treasury's acceptable daily exposure.
+5. Set `KEEPERHUB_MODE=live` and redeploy.
+6. Start with the maintainer-controlled `bounty-usdc:0.01` label and an approved recipient wallet.
+7. Merge the test PR, then preserve the KeeperHub execution ID, Base transaction hash and audit receipt.
+
 ## GitHub setup
 
 Create maintainer-controlled labels:
