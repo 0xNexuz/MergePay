@@ -85,6 +85,7 @@ function validGitHubSignature(body: Buffer, signature: string, secret: string) {
   const expected = `sha256=${createHmac("sha256", secret).update(body).digest("hex")}`;
   return signature.length === expected.length && timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
 }
+app.get("/docs", (_req, res) => res.sendFile(path.join(publicDir, "docs.html")));
 app.get("*splat", (_req, res) => res.sendFile(path.join(publicDir, "index.html")));
 
 if (!process.env.VERCEL) {
