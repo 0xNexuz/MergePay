@@ -39,7 +39,7 @@ if (tiltCard && !matchMedia('(prefers-reduced-motion: reduce)').matches && match
   tiltCard.addEventListener('pointerleave', () => { tiltCard.style.transform = ''; });
 }
 
-fetch('/health').then(r => r.json()).then(data => {
+fetch('/api/health').then(r => r.json()).then(data => {
   apiStatus.textContent = `● Agent online · ${data.keeperHubMode}`;
   apiStatus.classList.add('online');
   const modeLabel = document.querySelector('#mode-label');

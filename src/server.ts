@@ -24,7 +24,7 @@ const app = express();
 app.use(express.json({ verify: (req, _res, buf) => { (req as express.Request & { rawBody?: Buffer }).rawBody = Buffer.from(buf); } }));
 const publicDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "../public");
 app.use(express.static(publicDir));
-app.get("/health", (_req, res) => res.json({ ok: true, keeperHubMode: mode }));
+app.get(["/health", "/api/health"], (_req, res) => res.json({ ok: true, keeperHubMode: mode }));
 app.post("/api/bounties/settle", async (req, res) => {
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
