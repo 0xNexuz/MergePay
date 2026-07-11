@@ -28,8 +28,9 @@ const publicDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "../pu
 app.use(express.static(publicDir));
 app.get(["/health", "/api/health"], (_req, res) => res.json({ ok: true, keeperHubMode: mode, durableAudit: audit.durable }));
 app.get("/api/readiness", (_req, res) => {
+  const validKeeperHubKey = /^kh_[A-Za-z0-9_-]{10,}$/.test(process.env.KEEPERHUB_API_KEY ?? "");
   const checks = {
-    liveMode: mode === "live", keeperHubKey: Boolean(process.env.KEEPERHUB_API_KEY),
+    liveMode: mode === "live", keeperHubKey: validKeeperHubKey,
     tokenConfigured: Boolean(process.env.KEEPERHUB_TOKEN_ADDRESS), durableAudit: audit.durable,
     webhookSecret: Boolean(process.env.MERGEPAY_WEBHOOK_SECRET), adminToken: Boolean(process.env.MERGEPAY_ADMIN_TOKEN)
   };
