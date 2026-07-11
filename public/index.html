@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="MergePay verifies open-source work and settles contributor bounties onchain through KeeperHub." />
+  <meta name="theme-color" content="#0b0d0c" />
+  <title>MergePay — Autonomous bounty settlement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" /><link rel="stylesheet" href="/motion.css" />
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="MergePay home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>MergePay</span></a>
+      <div class="nav-links"><a href="#product">Product</a><a href="#security">Security</a><a href="#developers">Developers</a><a href="#demo">Demo</a></div>
+      <div class="nav-actions"><a class="docs-link" href="https://docs.keeperhub.com" target="_blank" rel="noreferrer">Docs ↗</a><a class="button button-light button-small" href="#demo">Launch demo <span>→</span></a></div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero dark-section">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="shell hero-layout">
+        <div class="hero-copy-block">
+          <div class="status-pill"><span></span> KeeperHub execution layer</div>
+          <h1>Code merged.<br><em>Bounty settled.</em></h1>
+          <p>MergePay verifies open-source contributions, enforces treasury policy, and executes auditable onchain payouts—without exposing private keys.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#demo">Settle a bounty <span>↗</span></a><a class="button button-ghost" href="#product">See how it works <span>↓</span></a></div>
+          <div class="hero-proof"><div><strong>&lt; 60s</strong><span>merge to payout</span></div><div><strong>100%</strong><span>policy checked</span></div><div><strong>0</strong><span>keys in app</span></div></div>
+        </div>
+
+        <div class="product-window tilt-card" aria-label="MergePay execution console preview">
+          <div class="window-bar"><div><i></i><i></i><i></i></div><span>mergepay / execution</span><b>DEMO</b></div>
+          <div class="window-body">
+            <div class="run-head"><div class="repo-avatar">KH</div><div><small>keeperhub/sdk</small><strong>feat: reliable payout retries</strong></div><span>PR #482</span></div>
+            <div class="pipeline">
+              <div class="pipeline-step complete"><span>✓</span><div><strong>GitHub proof verified</strong><small>Signed payload · merged by maintainer</small></div><time>0.3s</time></div>
+              <div class="pipeline-step complete"><span>✓</span><div><strong>Treasury policy approved</strong><small>Allowlisted repo · $75 within limit</small></div><time>0.1s</time></div>
+              <div class="pipeline-step active"><span>↗</span><div><strong>KeeperHub payout executed</strong><small>Base · USDC · gas sponsored</small></div><time>8.2s</time></div>
+            </div>
+            <div class="receipt-card"><div><small>SETTLEMENT</small><strong>$75.00 <i>USDC</i></strong></div><dl><div><dt>To</dt><dd>0x7A4…91F2</dd></div><div><dt>Status</dt><dd class="confirmed">● Confirmed</dd></div></dl><a href="#demo">View receipt ↗</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip"><div class="shell"><span>DECISION TO EXECUTION</span><div><b>⌘ GitHub</b><i>→</i><b class="merge-badge">M MergePay</b><i>→</i><b>⚡ KeeperHub</b><i>→</i><b>◆ Base</b></div><span>AUDITABLE ONCHAIN</span></div></section>
+
+    <section id="product" class="product-section shell">
+      <header class="section-header reveal"><div><span class="section-tag">01 · PRODUCT</span><h2>Automate the payout.<br>Keep the judgment.</h2></div><p>Define the rules once. MergePay turns approved GitHub work into a reliable, traceable settlement without giving the agent unrestricted wallet access.</p></header>
+      <div class="feature-grid">
+        <article class="feature-card feature-large reveal"><span class="card-index">01</span><div class="policy-visual"><div class="policy-title"><span>ACTIVE POLICY</span><b>● Enforced</b></div><div class="policy-row"><span>Repository</span><code>keeperhub/sdk</code><i>✓</i></div><div class="policy-row"><span>Approval label</span><code>bounty-approved</code><i>✓</i></div><div class="policy-row"><span>Maximum payout</span><code>$100 USDC</code><i>✓</i></div><div class="policy-row"><span>Duplicate guard</span><code>delivery_id</code><i>✓</i></div></div><div class="card-copy"><h3>Policy before payment</h3><p>Every payout is checked against repository, approval, amount, address, and replay rules before KeeperHub is called.</p></div></article>
+        <article class="feature-card reveal"><span class="card-index">02</span><div class="icon-box">◎</div><div class="card-copy"><h3>Built-in idempotency</h3><p>Repeated webhook deliveries return the original receipt instead of sending funds twice.</p></div></article>
+        <article class="feature-card dark-card reveal"><span class="card-index">03</span><div class="mini-receipt"><span>TRANSACTION</span><strong>0xab12…ef90</strong><small>Base · Block 31,482,901</small><b>CONFIRMED</b></div><div class="card-copy"><h3>Proof, not promises</h3><p>Each successful run produces an execution ID and onchain transaction reference.</p></div></article>
+      </div>
+    </section>
+
+    <section id="security" class="security-section">
+      <div class="shell security-layout">
+        <div class="security-copy reveal"><span class="section-tag light">02 · SECURITY</span><h2>Your treasury has rules.<br>Now your agent does too.</h2><p>MergePay separates decision-making from execution. The application never stores a wallet private key; KeeperHub remains the controlled transaction boundary.</p><a href="https://docs.keeperhub.com" target="_blank" rel="noreferrer">Read KeeperHub security docs ↗</a></div>
+        <div class="security-list">
+          <article class="reveal"><span>01</span><div><h3>Signed webhook verification</h3><p>GitHub payloads are authenticated with SHA-256 HMAC and timing-safe comparison.</p></div><b>VERIFIED</b></article>
+          <article class="reveal"><span>02</span><div><h3>Explicit payout ceilings</h3><p>Transactions outside the configured USD policy are rejected before execution.</p></div><b>ENFORCED</b></article>
+          <article class="reveal"><span>03</span><div><h3>KeeperHub execution boundary</h3><p>Managed gas, retries, and audit logs stay outside the agent’s decision layer.</p></div><b>ISOLATED</b></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="developers" class="developer-section shell">
+      <header class="section-header reveal"><div><span class="section-tag">03 · DEVELOPERS</span><h2>A small API with a<br>very real outcome.</h2></div><p>Connect a GitHub webhook or call the settlement endpoint directly. The same policy engine protects both paths.</p></header>
+      <div class="developer-console reveal">
+        <div class="console-tabs"><button class="active" type="button">Request</button><button type="button">Response</button><span>POST /api/webhooks/github</span></div>
+        <div class="console-grid"><pre><span class="comment">// Add this metadata to the approved PR</span>
+mergepay-recipient: <span class="string">0x7A4...91F2</span>
+mergepay-amount: <span class="number">75</span>
+
+<span class="comment">// MergePay validates the signed event</span>
+X-Hub-Signature-256: <span class="string">sha256=...</span></pre><div class="console-output"><span>200 OK</span><strong>Settlement confirmed</strong><dl><div><dt>Execution</dt><dd>run_8f24</dd></div><div><dt>Provider</dt><dd>KeeperHub</dd></div><div><dt>Network</dt><dd>Base</dd></div></dl><a href="#demo">Try the API flow →</a></div></div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+      <div class="shell demo-layout">
+        <div class="demo-intro reveal"><span class="section-tag light">04 · LIVE DEMO</span><h2>Test the decision layer.</h2><p>Submit a realistic bounty event. In mock mode you’ll receive a deterministic receipt; switch to live mode after connecting your KeeperHub workflow.</p><div class="mode-card"><span>ENVIRONMENT</span><strong id="mode-label">Checking…</strong><small>No real funds move while mock mode is active.</small></div></div>
+        <form id="settle-form" class="demo-form reveal">
+          <div class="form-head"><div><span>BOUNTY EVENT</span><small>All fields are verified before execution</small></div><span id="api-status" class="api-status">● Checking agent</span></div>
+          <label>Repository<input name="repository" value="owner/repository" required /></label>
+          <div class="two-col"><label>Pull request<input name="pullRequest" type="number" value="42" min="1" required /></label><label>Payout (USD)<input name="amountUsd" type="number" value="25" min="1" max="100" required /></label></div>
+          <label>Contributor wallet<input name="recipient" value="0x1111111111111111111111111111111111111111" required /></label>
+          <div class="check-row"><label><input name="merged" type="checkbox" checked /> PR is merged</label><label><input name="approved" type="checkbox" checked /> bounty-approved label</label></div>
+          <button class="button button-primary submit" type="submit"><span class="button-label">Evaluate & execute</span><span>↗</span></button>
+          <div id="result" class="result" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell footer-main"><div><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>MergePay</span></a><p>Autonomous bounty settlement,<br>executed through KeeperHub.</p></div><div><span>PRODUCT</span><a href="#product">How it works</a><a href="#security">Security</a><a href="#demo">Demo</a></div><div><span>BUILD</span><a href="https://docs.keeperhub.com" target="_blank" rel="noreferrer">KeeperHub docs ↗</a><a href="#developers">API overview</a><a href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a></div><div class="footer-cta"><span>READY TO TEST?</span><a class="button button-primary" href="#demo">Launch demo <span>→</span></a></div></div><div class="shell footer-base"><span>© 2026 MergePay</span><span>Built for The Last Mile</span><span>Open-source bounty infrastructure</span></div></footer>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
