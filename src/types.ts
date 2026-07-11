@@ -18,6 +18,12 @@ export type Decision = {
 export type ExecutionReceipt = {
   executionId: string;
   transactionHash?: string;
+  transactionLink?: string;
   status: "submitted" | "completed";
   provider: "keeperhub" | "mock";
+};
+
+export type AuditRecord = {
+  deliveryId: string; createdAt: string; updatedAt: string; status: "rejected" | "executing" | "completed" | "failed";
+  event: BountyEvent; reasons: string[]; receipt?: ExecutionReceipt; error?: string;
 };

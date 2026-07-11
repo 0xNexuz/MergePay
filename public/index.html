@@ -8,7 +8,7 @@
   <title>MergePay — Autonomous bounty settlement</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css" /><link rel="stylesheet" href="/motion.css" />
+  <link rel="stylesheet" href="/styles.css" /><link rel="stylesheet" href="/motion.css" /><link rel="stylesheet" href="/audit.css" />
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
@@ -75,7 +75,7 @@
         <div class="console-tabs"><button class="active" type="button">Request</button><button type="button">Response</button><span>POST /api/webhooks/github</span></div>
         <div class="console-grid"><pre><span class="comment">// Add this metadata to the approved PR</span>
 mergepay-recipient: <span class="string">0x7A4...91F2</span>
-mergepay-amount: <span class="number">75</span>
+GitHub label: <span class="string">bounty-usdc:75</span>
 
 <span class="comment">// MergePay validates the signed event</span>
 X-Hub-Signature-256: <span class="string">sha256=...</span></pre><div class="console-output"><span>200 OK</span><strong>Settlement confirmed</strong><dl><div><dt>Execution</dt><dd>run_8f24</dd></div><div><dt>Provider</dt><dd>KeeperHub</dd></div><div><dt>Network</dt><dd>Base</dd></div></dl><a href="#demo">Try the API flow →</a></div></div>
@@ -84,7 +84,7 @@ X-Hub-Signature-256: <span class="string">sha256=...</span></pre><div class="con
 
     <section id="demo" class="demo-section">
       <div class="shell demo-layout">
-        <div class="demo-intro reveal"><span class="section-tag light">04 · LIVE DEMO</span><h2>Test the decision layer.</h2><p>Submit a realistic bounty event. In mock mode you’ll receive a deterministic receipt; switch to live mode after connecting your KeeperHub workflow.</p><div class="mode-card"><span>ENVIRONMENT</span><strong id="mode-label">Checking…</strong><small>No real funds move while mock mode is active.</small></div></div>
+        <div class="demo-intro reveal"><span class="section-tag light">04 · LIVE DEMO</span><h2>Test the decision layer.</h2><p>Submit a realistic bounty event. In mock mode you’ll receive a deterministic receipt; live mode requires every security and execution check to pass.</p><div class="mode-card"><span>ENVIRONMENT</span><strong id="mode-label">Checking…</strong><small id="readiness-copy">Verifying production dependencies…</small></div><div class="readiness-list" id="readiness-list" aria-live="polite"></div></div>
         <form id="settle-form" class="demo-form reveal">
           <div class="form-head"><div><span>BOUNTY EVENT</span><small>All fields are verified before execution</small></div><span id="api-status" class="api-status">● Checking agent</span></div>
           <label>Repository<input name="repository" value="owner/repository" required /></label>
@@ -95,6 +95,7 @@ X-Hub-Signature-256: <span class="string">sha256=...</span></pre><div class="con
           <div id="result" class="result" aria-live="polite"></div>
         </form>
       </div>
+      <div class="shell audit-panel reveal"><div class="audit-head"><div><span class="section-tag light">EXECUTION AUDIT</span><h3>Recent decisions and receipts</h3></div><button id="refresh-audit" type="button">Refresh ↻</button></div><div id="audit-list" class="audit-list"><p>Loading execution history…</p></div></div>
     </section>
   </main>
 

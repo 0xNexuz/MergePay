@@ -44,7 +44,41 @@ fetch('/api/health').then(r => r.json()).then(data => {
   apiStatus.classList.add('online');
   const modeLabel = document.querySelector('#mode-label');
   if (modeLabel) modeLabel.textContent = data.keeperHubMode === 'live' ? 'LIVE · KEEPERHUB' : 'SAFE · MOCK MODE';
+  if (data.keeperHubMode === 'live') {
+    const submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    submit.querySelector('.button-label').textContent = 'Live payouts require signed GitHub events';
+  }
 }).catch(() => { apiStatus.textContent = '● Agent unavailable'; });
+
+fetch('/api/readiness').then(async response => {
+  const data = await response.json();
+  const list = document.querySelector('#readiness-list');
+  const copy = document.querySelector('#readiness-copy');
+  if (copy) copy.textContent = data.liveReady ? 'All production execution checks passed.' : 'Live payouts remain locked until every check passes.';
+  if (list) list.innerHTML = Object.entries(data.checks || {}).map(([name, pass]) => `<span class="${pass ? 'pass' : ''}">${pass ? '✓' : '○'} ${escapeHtml(name)}</span>`).join('');
+}).catch(() => {});
+
+async function loadAudit() {
+  const list = document.querySelector('#audit-list');
+  if (!list) return;
+  try {
+    const response = await fetch('/api/executions?limit=8');
+    const data = await response.json();
+    const records = data.executions || [];
+    if (!records.length) { list.innerHTML = '<p class="audit-empty">No execution records yet. Signed GitHub deliveries will appear here.</p>'; return; }
+    list.innerHTML = records.map(record => {
+      const link = record.receipt?.transactionLink;
+      return `<div class="audit-row"><span>${escapeHtml(new Date(record.createdAt).toLocaleString())}</span><div><strong>${escapeHtml(record.event.repository)} · PR #${Number(record.event.pullRequest)}</strong><small>${escapeHtml(record.event.contributor)} · $${Number(record.event.amountUsd).toFixed(2)} USDC</small></div><span class="audit-status ${escapeHtml(record.status)}">${escapeHtml(record.status)}</span>${link ? `<a href="${escapeHtml(link)}" target="_blank" rel="noreferrer">View transaction ↗</a>` : '<small>No transaction</small>'}</div>`;
+    }).join('');
+  } catch { list.innerHTML = '<p class="audit-empty">Execution history is temporarily unavailable.</p>'; }
+}
+document.querySelector('#refresh-audit')?.addEventListener('click', loadAudit);
+loadAudit();
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+}
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -69,7 +103,8 @@ form.addEventListener('submit', async (event) => {
     if (!response.ok) throw new Error(body.decision?.reasons?.join(' · ') || body.error || 'Execution rejected');
     const hash = body.receipt?.transactionHash || 'Awaiting confirmation';
     result.className = 'result show ok';
-    result.innerHTML = `<b>✓ BOUNTY APPROVED & EXECUTED</b><br>Provider: ${body.receipt.provider}<br>Execution: ${body.receipt.executionId}<br>Transaction: ${hash}`;
+    result.innerHTML = `<b>✓ BOUNTY APPROVED & EXECUTED</b><br>Provider: ${escapeHtml(body.receipt.provider)}<br>Execution: ${escapeHtml(body.receipt.executionId)}<br>Transaction: ${escapeHtml(hash)}${body.receipt.transactionLink ? `<br><a href="${escapeHtml(body.receipt.transactionLink)}" target="_blank" rel="noreferrer">Open explorer ↗</a>` : ''}`;
+    loadAudit();
   } catch (error) {
     result.className = 'result show error';
     result.textContent = `× NOT EXECUTED — ${error.message}`;
