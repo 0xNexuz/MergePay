@@ -35,6 +35,13 @@ export class KeeperHubExecutor implements Executor {
     return { executionId: status.executionId, transactionHash: status.transactionHash, transactionLink: status.transactionLink, status: "completed", provider: "keeperhub" };
   }
 
+  async simulate(recipientAddress: string, amount: string) {
+    return this.request("/api/execute/transfer", {
+      network: this.network, recipientAddress, amount,
+      ...(this.tokenAddress ? { tokenAddress: this.tokenAddress } : {}), simulate: true
+    }, "simulation", false);
+  }
+
   private async getStatus(executionId: string): Promise<KeeperHubStatus> {
     for (let attempt = 0; attempt < 5; attempt++) {
       const response = await this.fetchWithRetry(`${this.apiBase}/api/execute/${encodeURIComponent(executionId)}/status`, { headers: this.headers() });

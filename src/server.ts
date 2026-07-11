@@ -14,9 +14,8 @@ const schema = z.object({
   recipient: z.string().regex(/^0x[a-fA-F0-9]{40}$/), amountUsd: z.number().positive()
 });
 const mode = process.env.KEEPERHUB_MODE ?? "mock";
-const executor = mode === "live"
-  ? new KeeperHubExecutor(process.env.KEEPERHUB_API_URL ?? "https://app.keeperhub.com", process.env.KEEPERHUB_API_KEY!, process.env.KEEPERHUB_NETWORK ?? "base", process.env.KEEPERHUB_TOKEN_ADDRESS)
-  : new MockExecutor();
+const liveExecutor = new KeeperHubExecutor(process.env.KEEPERHUB_API_URL ?? "https://app.keeperhub.com", process.env.KEEPERHUB_API_KEY ?? "", process.env.KEEPERHUB_NETWORK ?? "base", process.env.KEEPERHUB_TOKEN_ADDRESS);
+const executor = mode === "live" ? liveExecutor : new MockExecutor();
 const audit = createAuditStore();
 const agent = new MergePayAgent({
   repositories: (process.env.ALLOWED_REPOSITORIES ?? "owner/repository").split(","),
@@ -40,6 +39,15 @@ app.get("/api/readiness", (_req, res) => {
 app.get("/api/executions", async (req, res) => {
   try { return res.json({ executions: await audit.list(Math.max(1, Math.min(50, Number(req.query.limit ?? 10)))) }); }
   catch (error) { return res.status(503).json({ error: "Audit history unavailable", detail: error instanceof Error ? error.message : String(error) }); }
+});
+app.post("/api/admin/simulate", async (req, res) => {
+  if (!process.env.MERGEPAY_ADMIN_TOKEN || req.header("authorization") !== `Bearer ${process.env.MERGEPAY_ADMIN_TOKEN}`) return res.status(401).json({ error: "Admin authorization required" });
+  try {
+    const result = await liveExecutor.simulate("0x000000000000000000000000000000000000dEaD", "0.01");
+    return res.json({ success: true, network: process.env.KEEPERHUB_NETWORK ?? "base", tokenAddress: process.env.KEEPERHUB_TOKEN_ADDRESS, simulation: result });
+  } catch (error) {
+    return res.status(502).json({ success: false, error: error instanceof Error ? error.message : String(error) });
+  }
 });
 app.post("/api/bounties/settle", async (req, res) => {
   if (mode === "live" && req.header("authorization") !== `Bearer ${process.env.MERGEPAY_ADMIN_TOKEN}`) return res.status(401).json({ error: "Admin authorization required for direct live settlement" });

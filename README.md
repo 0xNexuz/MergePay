@@ -131,6 +131,7 @@ Open http://localhost:3000.
 | `GET /api/executions` | Recent decision and transaction audit records |
 | `POST /api/webhooks/github` | Signed GitHub pull-request events |
 | `POST /api/bounties/settle` | Mock testing; requires admin bearer token live |
+| `POST /api/admin/simulate` | Admin-only, non-broadcast KeeperHub transfer simulation |
 
 ## Tests
 
