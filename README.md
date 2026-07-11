@@ -6,6 +6,15 @@
 - Product docs: https://mergepay-six.vercel.app/docs
 - Execution sponsor: [KeeperHub](https://keeperhub.com)
 
+## Verified mainnet proof
+
+MergePay has executed a real `0.01 USDC` payout on Base mainnet through KeeperHub:
+
+- KeeperHub execution: `kyc2ywxx5hs3afpo6qtkw`
+- Transaction: [`0xd97f72…3000d0`](https://basescan.org/tx/0xd97f72f6a284c4f51d866ce22e18ef6f6bcb713b910bc78c40eddb8c3a3000d0)
+- Recipient: `0x24570d70b3c80BD6A1736320D8e0E2636EB6E065`
+- Status: confirmed and recorded in the durable MergePay audit
+
 ## The problem
 
 Open-source bounty payments are usually manual. A maintainer must verify that work merged, recover the contributor's wallet, check the promised amount, open a treasury wallet, send the transaction, and preserve evidence. That process is slow, inconsistent, and vulnerable to duplicate payments or human error.
@@ -156,8 +165,8 @@ The suite covers policy rejection, duplicate delivery behavior, failure persiste
 
 - Public source and deployment
 - Signed GitHub webhook path
-- KeeperHub execution ID and run evidence
-- Real Base transaction hash and explorer URL
+- KeeperHub execution ID and run evidence: `kyc2ywxx5hs3afpo6qtkw`
+- [Real Base transaction hash and explorer receipt](https://basescan.org/tx/0xd97f72f6a284c4f51d866ce22e18ef6f6bcb713b910bc78c40eddb8c3a3000d0)
 - Audit record shown in the MergePay interface
 - Retry/idempotency demonstration
 
